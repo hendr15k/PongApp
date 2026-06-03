@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pong_bg">#000000</color>
+    <color name="pong_fg">#FFFFFF</color>
+    <color name="pong_accent">#33FF66</color>
+    <color name="pong_player">#33CCFF</color>
+    <color name="pong_ai">#FF6666</color>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pong</string>
+    <string name="touch_to_start">Tippen zum Starten</string>
+    <string name="paused">Pause</string>
+    <string name="game_over">Spiel vorbei</string>
+    <string name="winner_player">Spieler gewinnt!</string>
+    <string name="winner_ai">Computer gewinnt!</string>
+    <string name="tap_to_restart">Tippen für neue Runde</string>
+</resources>
