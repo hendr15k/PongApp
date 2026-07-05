@@ -26,6 +26,10 @@ class PongView @JvmOverloads constructor(
     private enum class State { READY, PLAYING, GAME_OVER }
 
     private var state: State = State.READY
+        set(value) {
+            field = value
+            updateAccessibility()
+        }
 
     private val bgColor = ContextCompat.getColor(context, R.color.pong_bg)
     private val fgColor = ContextCompat.getColor(context, R.color.pong_fg)
@@ -50,7 +54,15 @@ class PongView @JvmOverloads constructor(
     private lateinit var aiPaddle: Paddle
 
     private var playerScore = 0
+        set(value) {
+            field = value
+            updateAccessibility()
+        }
     private var aiScore = 0
+        set(value) {
+            field = value
+            updateAccessibility()
+        }
     private val winningScore = 7
 
     private var lastFrameNanos: Long = 0L
@@ -91,6 +103,20 @@ class PongView @JvmOverloads constructor(
     init {
         isFocusable = true
         touchSlop = ViewConfiguration.get(context).scaledTouchSlop.toFloat()
+        updateAccessibility()
+    }
+
+    private fun updateAccessibility() {
+        val msg = when (state) {
+            State.READY -> "${context.getString(R.string.app_name)}. ${context.getString(R.string.touch_to_start)}"
+            State.PLAYING -> context.getString(R.string.game_running, playerScore, aiScore)
+            State.GAME_OVER -> {
+                val winner = if (playerScore >= winningScore) context.getString(R.string.winner_player) else context.getString(R.string.winner_ai)
+                "${context.getString(R.string.game_over)}. $winner. ${context.getString(R.string.tap_to_restart)}"
+            }
+        }
+        contentDescription = msg
+        announceForAccessibility(msg)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -210,7 +236,7 @@ class PongView @JvmOverloads constructor(
         when (state) {
             State.READY -> {
                 textPaint.textSize = 32f * resources.displayMetrics.density
-                canvas.drawText("PONG", midX, midY - 30f * resources.displayMetrics.density, textPaint)
+                canvas.drawText(context.getString(R.string.app_name), midX, midY - 30f * resources.displayMetrics.density, textPaint)
                 textPaint.textSize = 22f * resources.displayMetrics.density
                 canvas.drawText(
                     context.getString(R.string.touch_to_start),
